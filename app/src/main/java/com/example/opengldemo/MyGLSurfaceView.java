@@ -7,6 +7,8 @@ import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.view.SurfaceHolder;
 
+import com.example.opengldemo.util.ShaderHelper;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -174,69 +176,8 @@ public class MyGLSurfaceView extends GLSurfaceView implements GLSurfaceView.Rend
         // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
         Matrix.setLookAtM(mViewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
-        // 1. 创建vertex shader
-        int vertexShaderHandle = GLES20.glCreateShader(GLES20.GL_VERTEX_SHADER);
-        if (vertexShaderHandle != 0) {
-            GLES20.glShaderSource(vertexShaderHandle, vertexShader);
-            GLES20.glCompileShader(vertexShaderHandle);
-            int[] compileStatus = new int[1];
-            GLES20.glGetShaderiv(vertexShaderHandle, GLES20.GL_COMPILE_STATUS, compileStatus, 0);
-            // If the compilation failed, delete the shader.
-            if (compileStatus[0] == 0)
-            {
-                GLES20.glDeleteShader(vertexShaderHandle);
-                vertexShaderHandle = 0;
-            }
-        }
 
-        if (vertexShaderHandle == 0)
-        {
-            throw new RuntimeException("Error creating vertex shader.");
-        }
-
-        // 2. 创建fragment shader
-        int fragmentShaderHandle = GLES20.glCreateShader(GLES20.GL_FRAGMENT_SHADER);
-        if (fragmentShaderHandle != 0) {
-            GLES20.glShaderSource(fragmentShaderHandle, fragmentShader);
-            GLES20.glCompileShader(fragmentShaderHandle);
-            int[] compileStatus = new int[1];
-            GLES20.glGetShaderiv(fragmentShaderHandle, GLES20.GL_COMPILE_STATUS, compileStatus, 0);
-            // If the compilation failed, delete the shader.
-            if (compileStatus[0] == 0)
-            {
-                GLES20.glDeleteShader(fragmentShaderHandle);
-                fragmentShaderHandle = 0;
-            }
-        }
-
-        if (fragmentShaderHandle == 0)
-        {
-            throw new RuntimeException("Error creating vertex shader.");
-        }
-
-        // 3. link -> attach compiler Create a program
-        int programHandle = GLES20.glCreateProgram();
-        if (programHandle != 0) {
-            GLES20.glAttachShader(programHandle, vertexShaderHandle);
-            GLES20.glAttachShader(programHandle, fragmentShaderHandle);
-
-            // Link the two shaders together into a program.
-            GLES20.glLinkProgram(programHandle);
-
-            // Get the link status.
-            final int[] linkStatus = new int[1];
-            GLES20.glGetProgramiv(programHandle, GLES20.GL_LINK_STATUS, linkStatus, 0);
-
-            // If the link failed, delete the program.
-            if (linkStatus[0] == 0) {
-                GLES20.glDeleteProgram(programHandle);
-                programHandle = 0;
-            }
-        }
-
-        if (programHandle == 0) {
-            throw new RuntimeException("Error creating program.");
-        }
+        final int programHandle = ShaderHelper.createProgram(vertexShader, fragmentShader);
 
         // 寻找参数位置
         // Bind attributes
