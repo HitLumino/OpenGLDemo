@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.opengldemo">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.autofocus"/>
+
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -16,17 +21,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RecyclerActivity">
+
+        <activity android:name=".CameraActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Demo1Activity">
 
-        </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".RecyclerActivity"></activity>
+        <activity android:name=".Demo1Activity"></activity>
+        <activity android:name=".MainActivity" ></activity>
     </application>
 
 </manifest>
