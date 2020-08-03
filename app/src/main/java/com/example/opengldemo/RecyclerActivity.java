@@ -5,12 +5,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerActivity extends AppCompatActivity {
     private List<Assets> assetsList = new ArrayList<>();
+    private MyGLSurfaceView mGLSurfaceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,15 @@ public class RecyclerActivity extends AppCompatActivity {
         AssetAdapter assetAdapter = new AssetAdapter(assetsList);
         recyclerView.setAdapter(assetAdapter);
 
+        RelativeLayout layout = findViewById(R.id.GL_surface);
+
+        mGLSurfaceView = new MyGLSurfaceView(this);
+
+        mGLSurfaceView.setEGLContextClientVersion(2);
+        mGLSurfaceView.setRenderer(this.mGLSurfaceView);
+
+        layout.addView(mGLSurfaceView);
+
     }
 
     private void intAsset() {
@@ -39,10 +51,12 @@ public class RecyclerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        mGLSurfaceView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        mGLSurfaceView.onPause();
     }
 }

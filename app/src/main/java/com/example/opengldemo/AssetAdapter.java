@@ -44,6 +44,7 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.ViewHolder> 
                 int position = viewHolder.getAdapterPosition();
                 Assets assets = mAssetList.get(position);
                 Toast.makeText(v.getContext(), "正在加载素材"  + assets.getName() + " 请稍候" , Toast.LENGTH_SHORT).show();
+
             }
         });
 

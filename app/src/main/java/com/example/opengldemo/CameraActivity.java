@@ -1,6 +1,9 @@
 package com.example.opengldemo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Context;
@@ -15,6 +18,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,6 +35,7 @@ public class CameraActivity extends AppCompatActivity {
     private final static String TAG = CameraActivity.class.getSimpleName();
     private Camera mCamera;
     private CameraPreview mCameraPreview;
+    private RelativeLayout layout;
     private SurfaceHolder surfaceHolder;
     private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
 
@@ -62,7 +68,7 @@ public class CameraActivity extends AppCompatActivity {
 
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+            Log.d(TAG, "surfaceChanged: ");
         }
 
         @Override
@@ -85,31 +91,36 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
-            }
+        requestPermission();
 
         if (!checkCameraHardware(this)) {
             return;
         }
 
 
+//        SurfaceView surfaceView = findViewById(R.id.camera_view);
+//        // 不能直接操作SurfaceView，需要通过SurfaceView拿到SurfaceHolder
+//        surfaceHolder = surfaceView.getHolder();
+//        // 使用SurfaceHolder设置屏幕高亮，注意：所有的View都可以设置 设置屏幕高亮
+//        surfaceHolder.setKeepScreenOn(true);
+//        // 使用SurfaceHolder设置把画面或缓存 直接显示出来
+//       // surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+//        surfaceHolder.addCallback(callback);
 
-        SurfaceView surfaceView = findViewById(R.id.camera_view);
-        // 不能直接操作SurfaceView，需要通过SurfaceView拿到SurfaceHolder
-        surfaceHolder = surfaceView.getHolder();
-        // 使用SurfaceHolder设置屏幕高亮，注意：所有的View都可以设置 设置屏幕高亮
-        surfaceHolder.setKeepScreenOn(true);
-        // 使用SurfaceHolder设置把画面或缓存 直接显示出来
-       // surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        surfaceHolder.addCallback(callback);
+        layout = findViewById(R.id.surfaceviewlayout);
 
+        mCameraPreview = new CameraPreview(this);
 
-//        mCamera = getCameraInstance();
-//        mCameraPreview = new CameraPreview(this, mCamera);
-//        FrameLayout preview = findViewById(R.id.camera_surface_view2);
-//        preview.addView(mCameraPreview);
+        layout.addView(mCameraPreview);
+    }
+
+    void requestPermission(){
+        final int REQUEST_CODE = 1;
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                            Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_CODE);
+        }
     }
 
     public static Camera getCameraInstance(){
@@ -141,6 +152,8 @@ public class CameraActivity extends AppCompatActivity {
         Log.d(TAG, ">>>> onDestroy()");
         if (null != callback) surfaceHolder.removeCallback(callback);
     }
+
+
 
 
 }
