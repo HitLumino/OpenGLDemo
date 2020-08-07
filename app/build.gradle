@@ -27,4 +27,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation 'org.xutils:xutils:3.5.0'
+    implementation 'com.androidkun:XTabLayout:1.1.4'
 }

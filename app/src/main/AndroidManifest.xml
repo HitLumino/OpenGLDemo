@@ -24,6 +24,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".tablayout.TabLayoutActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".viewPage.ViewPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,8 +40,8 @@
         </activity>
         <activity
             android:name=".CameraActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".RecyclerActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".RecyclerActivity" />
         <activity android:name=".Demo1Activity" />
         <activity android:name=".MainActivity">
             <intent-filter>

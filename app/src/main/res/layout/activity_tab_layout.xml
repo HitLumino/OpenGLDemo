@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".tablayout.TabLayoutActivity">
+
+    <com.androidkun.xtablayout.XTabLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/tab_layout"
+        app:xTabBackgroundColor="@color/colorPrimaryDark">
+    </com.androidkun.xtablayout.XTabLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tab_recycler_view"
+        android:background="@color/colorPrimaryDark">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>
