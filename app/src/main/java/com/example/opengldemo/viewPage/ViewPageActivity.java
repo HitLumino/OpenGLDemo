@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import com.example.opengldemo.CameraPreview;
+import com.example.opengldemo.MyGLSurfaceView;
 import com.example.opengldemo.R;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 public class ViewPageActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private CameraPreview cameraPreview;
+
     private List<Integer> imageList = new ArrayList<>();
 
     @Override
@@ -26,11 +28,9 @@ public class ViewPageActivity extends AppCompatActivity {
         imageList.add(R.mipmap.ic_launcher);
         imageList.add(R.mipmap.ic_launcher_round);
         imageList.add(R.drawable.ic_launcher_foreground);
-        viewPager.setAdapter(new MyViewPageAdapter(imageList));
+        viewPager.setAdapter(new MyViewPageAdapter(imageList, this));
 
-        LinearLayout layout = findViewById(R.id.camera_layout);
-        cameraPreview = new CameraPreview(this);
-        layout.addView(cameraPreview);
+
 
     }
 }
