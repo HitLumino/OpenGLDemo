@@ -51,6 +51,8 @@ public class MyViewPageAdapter extends PagerAdapter {
         container.addView(imageButton);
         final LinearLayout layout = ((Activity)mContext).findViewById(R.id.camera_layout);
         final MyGLSurfaceView myGLSurfaceView = new MyGLSurfaceView(mContext);
+        myGLSurfaceView.setEGLContextClientVersion(2);
+        myGLSurfaceView.setRenderer(myGLSurfaceView);
         final CameraPreview cameraPreview = new CameraPreview(mContext);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +62,7 @@ public class MyViewPageAdapter extends PagerAdapter {
                 layout.removeAllViews();
                 if (position % 2 == 0) {
                     layout.addView(myGLSurfaceView);
-                    myGLSurfaceView.setEGLContextClientVersion(2);
-                    myGLSurfaceView.setRenderer(myGLSurfaceView);
+
                 } else {
                     layout.removeAllViews();
                     layout.addView(cameraPreview);
